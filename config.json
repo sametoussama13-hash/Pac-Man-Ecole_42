@@ -1,0 +1,36 @@
+{
+    # file of my score*
+    "highscore_filename": "./my_score.json",
+    
+    # lives
+    "lives": 3,
+
+    # point pacgum
+    "points_per_pacgum": 10,
+
+    # point super pacgum
+    "points_per_super_pacgum": 50,
+    
+    # point ghost
+    "points_per_ghost": 200,
+
+    # array of levels
+    "levels":[
+        {
+            "width": 15,
+            "height": 15,
+            "level_max_time": 120,
+            "seed": 42
+        },
+        {
+            "width": 20,
+            "height": 20,
+            "level_max_time": 90
+        },
+        {
+            "width": 30,
+            "height": 30,
+            "level_max_time": 60
+        }
+    ]
+}
