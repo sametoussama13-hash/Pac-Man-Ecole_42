@@ -6,7 +6,7 @@ from ..animation.menu_icone import MenuIcone
 import pygame
 
 
-class MenuScreen(Screen):
+class PauseScreen(Screen):
     """Display menu."""
 
     def __init__(self, level_config: LevelConfig | None = None) -> None:
@@ -22,10 +22,14 @@ class MenuScreen(Screen):
 
     def handle_event(self, event: pygame.event.Event) -> None:
         """Handel event."""
-        from .game_screen import GameScreen
+        from .game_screen import Screen
         if event.key == pygame.K_SPACE:
             if self.index == 0:
-                self.next_screen = GameScreen(self.config_level)
+                self.next_screen = Screen.screens_list[-2]
+                return
+            if self.index == 1:
+                self.next_screen = Screen.screens_list[0]
+                return
         if event.key == pygame.K_DOWN:
             if self.index < (len(self.list_choice) - 1):
                 self.index += 1
@@ -39,9 +43,6 @@ class MenuScreen(Screen):
 
     def draw(self, screen: pygame.Surface) -> None:
         """Draw screen."""
-        # Backgroun
-        bg_menu = MenuIcone.background_menu(screen.get_size()[0])
-        screen.blit(bg_menu, (0, 0))
 
         # Overlay screen
         overlay = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
@@ -54,8 +55,8 @@ class MenuScreen(Screen):
         logo_y = 70
         screen.blit(logo_img, (logo_x, logo_y))
 
-        menu_list: list[str] = ["PLAY", "CLASSEMENT", "INSTRUCTIONS", "OPTIONS", "EXIT"]
-        self.display_choice(screen, menu_list, (logo_y + logo_img.get_height()))
+        menu_list: list[str] = ["CONTINUE", "EXIT"]
+        self.display_choice(screen, menu_list, 300)
 
         # cursor
         cursor_img = MenuIcone.cursor_pacman(self.size_cursor)

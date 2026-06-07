@@ -2,6 +2,7 @@
 from .parsing_conf import Config
 import pygame
 
+
 class ErrorGamePlay(Exception):
     pass
 
@@ -29,6 +30,7 @@ class GamePlay:
         """Init PlayGame."""
         self.screen_size = screen_size
         self.config = config
+        self.levels = config.levels
 
     def run(self) -> int:
         from .screens import MenuScreen
@@ -36,7 +38,8 @@ class GamePlay:
             pygame.init()
             clock = pygame.time.Clock()
             screen = pygame.display.set_mode(self.screen_size)
-            current_screen = MenuScreen(self.config)
+            current_screen = MenuScreen(self.levels[0])
+            Screen.add_screen(current_screen)
 
             runing = True
 
@@ -48,10 +51,13 @@ class GamePlay:
                         current_screen.handle_event(event)
                         if current_screen.next_screen:
                             current_screen = current_screen.next_screen
+                            if current_screen not in Screen.screens_list:
+                                Screen.add_screen(current_screen)
 
                 screen.fill((0, 0, 0))
 
                 current_screen.draw(screen)
+                print("list_screen", Screen.screens_list)
 
                 pygame.display.update()
                 clock.tick(60)

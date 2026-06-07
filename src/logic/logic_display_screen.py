@@ -1,8 +1,6 @@
 """Get screen parameters."""
 from ..box import Box
-# from ..mazedisplay import DisplayMaze
-from ..animation.pacman_icone import PacmanIcone
-import pygame
+
 
 class LogicDisplayScreen:
     """Get screen parameters."""

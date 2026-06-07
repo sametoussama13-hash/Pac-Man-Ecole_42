@@ -31,13 +31,19 @@ class PacmanIcone:
     @classmethod
     def super_pacgum(cls) -> tuple[pygame.Surface, int]:
         cell_size: int = (cls.CELL_SIZE * 70) // 100
-        s_pacgum: pygame.Surface = pygame.image.load("./images/s_pacgum/s_pacgum.png").convert_alpha()
-        s_pacgum: pygame.Surface = pygame.transform.scale(s_pacgum, (cell_size, cell_size))
+        s_pacgum: pygame.Surface = pygame.image.load(
+            "./images/s_pacgum/s_pacgum.png").convert_alpha()
+        s_pacgum: pygame.Surface = pygame.transform.scale(s_pacgum,
+                                                          (cell_size,
+                                                           cell_size))
         return s_pacgum, cell_size
 
     @classmethod
     def pacgum(cls) -> tuple[pygame.Surface, int]:
         cell_size: int = (cls.CELL_SIZE * 20) // 100
-        s_pacgum: pygame.Surface = pygame.image.load("./images/s_pacgum/s_pacgum.png").convert_alpha()
-        s_pacgum: pygame.Surface = pygame.transform.scale(s_pacgum, (cell_size, cell_size))
+        s_pacgum: pygame.Surface = pygame.image.load(
+            "./images/s_pacgum/s_pacgum.png").convert_alpha()
+        s_pacgum: pygame.Surface = pygame.transform.scale(s_pacgum,
+                                                          (cell_size,
+                                                           cell_size))
         return s_pacgum, cell_size

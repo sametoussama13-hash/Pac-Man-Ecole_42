@@ -2,7 +2,6 @@ from ..parsing_conf import Config
 from ..play_game import Screen
 from ..logic import LogicGameScreen, LogicDisplayScreen
 from ..box import Box
-from .menu_screen import MenuScreen
 from ..animation import PacmanIcone
 from ..mazedisplay import DisplayMaze
 from mazegenerator import MazeGenerator
@@ -10,22 +9,22 @@ from ..direction import Direction
 from ..animation.menu_icone import MenuIcone
 from ..score import ScorePlayer
 
-
 from .game_over_screen import GameOverScreen
+from .pause_screen import PauseScreen
 import pygame
-import asyncio
+
 
 
 class GameScreen(Screen):
     """Display Screen play."""
 
-    def __init__(self, config: Config,
+    def __init__(self, config_level: Config,
                  screen_size: tuple[int] = (800, 800)) -> None:
         """Init Game screen"""
         # self.font = pygame.font.SysFont("arial", 20)
         self.next_screen = None
-        self.config = config
-        self.config_levels = config.levels
+        # self.config = config
+        self.config_level = config_level
         self.maze: list[list[Box]] = self.generate_maze()
         self.x, self.y = LogicDisplayScreen.position_pacman(self.maze)
         self.speed = 6  # pour l'instan
@@ -51,8 +50,8 @@ class GameScreen(Screen):
 
     def generate_maze(self) -> DisplayMaze:
         """Generate maze."""
-        width = self.config_levels[0].width
-        height = self.config_levels[0].height
+        width = self.config_level.width
+        height = self.config_level.height
         size = (width, height)
         maze = MazeGenerator(size=size)
         maze_display = DisplayMaze(maze)
@@ -69,7 +68,7 @@ class GameScreen(Screen):
         elif event.key == pygame.K_DOWN:
             self.next_dir = (0, 1)
         elif event.key == pygame.K_ESCAPE:
-            self.next_screen = MenuScreen(self.config)
+            self.next_screen = PauseScreen(self.config_level)
         else:
             self.next_dir = (0, 0)
 
@@ -93,21 +92,27 @@ class GameScreen(Screen):
 
     def display_pacman(self, screen: pygame.Surface):
         """display pacman"""
-        self.x, self.y = LogicGameScreen.convert_px_to_cel(self.player_x, self.player_y, self.cell_size, self.maze_x)
+        self.x, self.y = LogicGameScreen.convert_px_to_cel(self.player_x,
+                                                           self.player_y,
+                                                           self.cell_size,
+                                                           self.maze_x)
 
         current_x = (self.player_x - self.maze_x) % self.cell_size < self.speed
         current_y = (self.player_y - 100) % self.cell_size < self.speed
 
         if current_x and current_y:
-            if LogicGameScreen.can_move(self.x, self.y, self.next_dir, self.maze):
+            if LogicGameScreen.can_move(self.x, self.y, self.next_dir,
+                                        self.maze):
                 self.direction = self.next_dir
                 if self.next_dir:
                     try:
-                        self.pacman_img = PacmanIcone.dir_pacman(Direction.get_dir(self.next_dir))
+                        self.pacman_img = PacmanIcone.dir_pacman(
+                            Direction.get_dir(self.next_dir))
                     except KeyError:
                         pass
 
-            if not LogicGameScreen.can_move(self.x, self.y, self.direction, self.maze):
+            if not LogicGameScreen.can_move(self.x, self.y, self.direction,
+                                            self.maze):
                 self.direction = (0, 0)
 
         self.player_x += self.direction[0] * self.speed
@@ -116,7 +121,8 @@ class GameScreen(Screen):
         if self.index >= len(self.pacman_img):
             self.index = 0
 
-        screen.blit(self.pacman_img[self.index], (self.player_x, self.player_y))
+        screen.blit(self.pacman_img[self.index],
+                    (self.player_x, self.player_y))
 
         if self.maze[self.y][self.x].super_pacgum:
             self.maze[self.y][self.x].super_pacgum = False
