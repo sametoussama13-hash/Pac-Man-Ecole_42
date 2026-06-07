@@ -1,4 +1,3 @@
-#!/bin/python3
 """Lunch PacMan game."""
 import sys
 from src.main import run

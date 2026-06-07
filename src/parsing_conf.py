@@ -9,10 +9,12 @@ class LevelConfig(BaseModel):
     height: int = Field(..., ge=2)
     level_max_time: int = Field(..., ge=0)
     pacgum: int = Field(default=42, ge=0)
+    speed: int = Field(default=2, ge=0)
 
 
 class Config(BaseModel):
 
+    size_screen: tuple
     highscore_filename: str
     lives: int = Field(..., ge=0)
     points_per_pacgum: int = Field(..., ge=0)
@@ -28,6 +30,16 @@ class Config(BaseModel):
             level_object = LevelConfig(**level)
             levels_list.append(level_object)
         return levels_list
+    
+    @field_validator("size_screen", mode="before")
+    @classmethod
+    def create_size_screen(cls, size_screen: list[int]) -> tuple[int]:
+        """Create tuple for size screen."""
+        for size in size_screen:
+            if size < 800:
+                raise ValueError("size screen greter than (800, 800)")
+        return tuple(size_screen)
+
 
     @model_validator(mode='after')
     def validation(self) -> Any:

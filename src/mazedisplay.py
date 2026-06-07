@@ -8,17 +8,6 @@ class DisplayMaze:
         self.maze: MazeGenerator = maze
         self.maze_grid: list[list[int]] = maze.maze
         self.grid_display: list[list[Box]] = self.generate_display_maze()
-        self.entry: tuple[int] = self.converte_position(maze.maze_entry)
-
-    def converte_position(self, position: tuple[int]) -> tuple[int]:
-        x, y = position
-        a = 0
-        b = 0
-        for _ in range(x + 1):
-            a += 1
-        for _ in range(y + 1):
-            b += 1
-        return x + a, y + b
 
     def generate_display_maze(self) -> list[list[Box]]:
         """Generate display maze."""
