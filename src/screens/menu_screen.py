@@ -33,7 +33,7 @@ class MenuScreen(Screen):
             if self.index > 0:
                 self.index -= 1
 
-    def update(self, dt) -> None:
+    def update(self, dt: float) -> None:
         """Update timer."""
         pass
 

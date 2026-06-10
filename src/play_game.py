@@ -38,7 +38,7 @@ class GamePlay:
             pygame.init()
             clock = pygame.time.Clock()
             screen = pygame.display.set_mode(self.screen_size)
-            current_screen = MenuScreen(self.levels[0])
+            current_screen = MenuScreen(self.levels)
             Screen.add_screen(current_screen)
 
             runing = True
@@ -51,16 +51,20 @@ class GamePlay:
                         current_screen.handle_event(event)
                         if current_screen.next_screen:
                             current_screen = current_screen.next_screen
+                            current_screen.next_screen = None
                             if current_screen not in Screen.screens_list:
                                 Screen.add_screen(current_screen)
-
+                dt = clock.tick(40) / 1000
                 screen.fill((0, 0, 0))
 
+                current_screen.update(dt)
+
                 current_screen.draw(screen)
-                print("list_screen", Screen.screens_list)
+                # if len(Screen.screens_list) > 2:
+                #     print("list_screen", Screen.screens_list)
 
                 pygame.display.update()
-                clock.tick(60)
+                print("FPS:", round(clock.get_fps(), 2))
 
             pygame.quit()
 
@@ -68,4 +72,3 @@ class GamePlay:
             print(e)
             return 1
         return 0
-

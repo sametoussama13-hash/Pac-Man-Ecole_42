@@ -1,7 +1,11 @@
 from .menu_icone import MenuIcone
-from .pacman_icone import PacmanIcone
+from .pacman import Pacman
+from .pacgum import PacGum
+from .maze import Maze
 
 __all__ = [
-    "PacmanIcone",
+    "Pacman",
     "MenuIcone",
+    "PacGum",
+    "Maze"
 ]

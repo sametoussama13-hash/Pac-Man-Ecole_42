@@ -3,6 +3,7 @@ from .parsing_conf import parsing_conf
 from .play_game import GamePlay
 from mazegenerator import MazeGenerator
 
+
 class ErrorGenerationMaze(Exception):
     pass
 

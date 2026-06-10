@@ -1,20 +1,9 @@
 """Play game."""
 from ..box import Box
-from ..animation.pacman_icone import PacmanIcone
 
 
 class LogicGameScreen:
     """Play game."""
-
-    @staticmethod
-    def get_cell_size(size_screen: tuple[int], grid: list[list[Box]]) -> int:
-        """Adapte cell size withe screen size."""
-        width = len(grid[0])
-        width_screen = size_screen[0]
-        cell_size = int((45 * ((width_screen - 200) / width)) /
-                        ((width_screen - 200) / 15))
-        PacmanIcone.CELL_SIZE = cell_size
-        return PacmanIcone.CELL_SIZE
 
     @staticmethod
     def can_move(x: int, y: int,

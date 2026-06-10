@@ -1,0 +1,23 @@
+
+
+
+May 26, 2026 — Juliette
+
+L’objectif de ce commit est de préparer une architecture permettant de coder plus rapidement par la suite, en évitant les répétitions de functions, methode et en améliorant la répartition des tâches.
+
+
+Dans ce commit, je propose une nouvelle architecture afin de se rapprocher davantage d’un modèle MVC (Model–View–Controller).
+Le modèle MVC (Model–View–Controller) est un pattern d’architecture logicielle qui sert à organiser le code en séparant les responsabilités. Cela rend les projets plus clairs, maintenables et évolutifs.
+L’objectif est de séparer la partie interface utilisateur de la logique du jeu.
+
+Dans le dossier user_interface, j’ai créé une classe UserInterface qui contient tous les menus.
+Il s’agit de l’interface correspondant aux menus présentés dans le PDF.
+Cette classe nous permettra de faciliter les évolutions et les modifications de l’interface.
+
+J’ai également préparé un fichier game_arch, à titre d’exemple, pour illustrer comment on pourrait structurer le projet afin d’éviter les répétitions et améliorer la répartition des responsabilités.
+
+Il y a aussi un fichier game_logic que j’ai créé, qui pourrait contenir les mêmes fonctions que dans screenPlay et playScreen, mais sans tout ce qui concerne les menus.
+
+On pourrait également utiliser le duck typing pour gérer l’augmentation du score en fonction du niveau, sans avoir à préciser explicitement le type d’ennemi éliminé.
+
+Pour cela, des classes Level exprimeraient les spécificités de chaque niveau.

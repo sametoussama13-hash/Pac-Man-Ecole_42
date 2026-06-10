@@ -9,11 +9,11 @@ import pygame
 class PauseScreen(Screen):
     """Display menu."""
 
-    def __init__(self, level_config: LevelConfig | None = None) -> None:
+    def __init__(self) -> None:
         """Init Game screen"""
         self.font = pygame.font.Font("./font/PressStart2P.ttf", 30)
-        self.config_level = level_config
         self.next_screen = None
+        self.menu_list: list[str] = ["CONTINUE", "EXIT"]
         self.size_logo: int = 500
         self.size_cursor: int = 30
         self.list_choice = []
@@ -55,20 +55,22 @@ class PauseScreen(Screen):
         logo_y = 70
         screen.blit(logo_img, (logo_x, logo_y))
 
-        menu_list: list[str] = ["CONTINUE", "EXIT"]
-        self.display_choice(screen, menu_list, 300)
+        self.display_choice(screen, (screen.get_height() * 0.45))
 
         # cursor
         cursor_img = MenuIcone.cursor_pacman(self.size_cursor)
         cursor_x, cursor_y = self.list_choice[self.index]
         screen.blit(cursor_img, (cursor_x - 60, cursor_y))
 
-    def display_choice(self, screen: pygame.Surface, menu_list: list[str], y: int) -> None:
+    def display_choice(self, screen: pygame.Surface, y: int) -> None:
+        """Display choice."""
         choice_y = y
-        for menu in menu_list:
+        for menu in self.menu_list:
             choice = self.font.render(menu, True, (255, 234, 0))
             choice_x = LogicDisplayScreen.get_center_position(screen.get_width(), choice.get_width())
-            choice_y = choice_y + (choice.get_height() * 2)
             screen.blit(choice, (choice_x, choice_y))
+
             if (choice_x, choice_y) not in self.list_choice:
                 self.list_choice.append((choice_x, choice_y))
+
+            choice_y = choice_y + (choice.get_height() * 2)

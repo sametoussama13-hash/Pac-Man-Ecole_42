@@ -1,4 +1,4 @@
-from mazegenerator import MazeGenerator
+from mazegenerator.mazegenerator import MazeGenerator
 from .box import Box
 
 
